@@ -1,5 +1,5 @@
 {
-  "name": "@vatom/sdk",
+  "name": "@vatom/web-sdk",
   "version": "3.3.27",
   "description": "Allows web apps to display and interact with vatoms.",
   "main": "lib/index-node.js",
