@@ -31,6 +31,8 @@ jobs:
          paths:
            - dist/*
            - node_modules/*
+           - lib/*
+           - face/*
   publish-web-sdk:
     <<: *defaults
     steps:
