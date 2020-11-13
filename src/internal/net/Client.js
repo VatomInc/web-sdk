@@ -63,13 +63,14 @@ export default class Client extends EventEmitter {
    * @returns {Promise<object>} The server's response payload.
    */
   async request (method, endpoint, payload, auth, headers) {
+    console.log('requesting2')
     // Ensure our access token is up to date, if this is an authenticated request
-    if (auth) await this.checkToken()
+    if (auth && !this.Blockv.disableAuth) await this.checkToken()
 
     // Attach headers
     if (!headers) headers = {}
     headers['App-Id'] = this.store.appID
-    if (auth) headers['Authorization'] = `Bearer ${this.store.token}`
+    if (auth && !this.Blockv.disableAuth) headers['Authorization'] = `Bearer ${this.store.token}`
 
     // Send request
     return this.authRequest(method, endpoint, payload, headers)
