@@ -109,6 +109,10 @@ export default class UserManager {
     return this.UserApi.getAccessToken()
   }
 
+  setAccessToken (token) {
+    return this.UserApi.setAccessToken(token)
+  }
+
   /**
      * Automatically Encodes the Asset Provides URI's
      * @param {String} url The URL that needs to be encoded
