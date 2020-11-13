@@ -30,6 +30,7 @@ jobs:
          root: ~/web-sdk
          paths:
            - dist/*
+           - node_modules/*
   publish-web-sdk:
     <<: *defaults
     steps:
