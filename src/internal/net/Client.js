@@ -64,7 +64,7 @@ export default class Client extends EventEmitter {
    */
   async request (method, endpoint, payload, auth, headers) {
     // Ensure our access token is up to date, if this is an authenticated request
-    if (auth && !this.Blockv.disableTokenRefresh) await this.checkToken()
+    if (auth && !this.Blockv.useExternalToken) await this.checkToken()
 
     // Attach headers
     if (!headers) headers = {}
