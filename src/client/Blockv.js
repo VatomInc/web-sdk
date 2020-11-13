@@ -33,6 +33,8 @@ export default class Blockv extends EventEmitter {
     this.dataPool.Blockv = this
     this.dataPool.disableSyncV2 = payload.disableSyncV2
     this.disableAuth = payload.disableAuth
+    this.disableLogin = payload.disableLogin
+    this.disableTokenRefresh = payload.disableTokenRefresh
     this.client = new Client(this)
 
     const userApi = new UserApi(this)
@@ -40,7 +42,7 @@ export default class Blockv extends EventEmitter {
 
     this.Activity = new Activity(activityApi)
     this.WebSockets = new MultiWebSockets(this.store, this.client)
-    this.UserManager = new UserManager(userApi, this.store, payload.disableAuth)
+    this.UserManager = new UserManager(userApi, this.store, payload.disableAuth, payload.disableLogin)
     this.Vatoms = new Vatoms(this)
 
     if (this.UserManager.isLoggedIn) {

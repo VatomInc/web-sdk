@@ -13,10 +13,11 @@ import jwtDecode from 'jwt-decode'
 /* global window */
 
 export default class UserManager {
-  constructor (UserApi, store, disableAuth) {
+  constructor (UserApi, store, disableAuth, disableLogin) {
     this.UserApi = UserApi
     this.store = store
     this.disableAuth = disableAuth
+    this.disableLogin = disableLogin
   }
 
   /**
@@ -207,7 +208,7 @@ export default class UserManager {
      * @return {Boolean} returns True / False if the refresh token is valid
      */
   get isLoggedIn () {
-    if (this.disableAuth) return true;
+    if (this.disableLogin) return true;
     // stop if no access provider credentials exist
     if (!this.store.assetProvider)
       return false
