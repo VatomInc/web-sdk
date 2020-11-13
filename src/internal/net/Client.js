@@ -63,7 +63,6 @@ export default class Client extends EventEmitter {
    * @returns {Promise<object>} The server's response payload.
    */
   async request (method, endpoint, payload, auth, headers) {
-    console.log('requesting2')
     // Ensure our access token is up to date, if this is an authenticated request
     if (auth && !this.Blockv.disableAuth) await this.checkToken()
 
