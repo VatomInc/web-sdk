@@ -17,7 +17,7 @@ export default class UserManager {
     this.UserApi = UserApi
     this.store = store
     this.disableAuth = disableAuth
-    this.useExternalTokens = useExternalToken
+    this.useExternalToken = useExternalToken
   }
 
   /**
