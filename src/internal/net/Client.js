@@ -64,7 +64,9 @@ export default class Client extends EventEmitter {
    */
   async request (method, endpoint, payload, auth, headers) {
     // Ensure our access token is up to date, if this is an authenticated request
-    if (auth && !this.Blockv.useExternalToken) await this.checkToken()
+    if (auth) {
+      await this.checkToken()
+    }
 
     // Attach headers
     if (!headers) headers = {}
@@ -257,8 +259,13 @@ export default class Client extends EventEmitter {
       // quick calc to determine if the token has expired
       if ((nowDate + 5000) > expirationTime) throw new Error('Token expired.')
     } catch (e) {
-      // There was an error with the access token. Fetch a new one.
-      return this.refreshToken()
+
+      if (!this.Blockv.useExternalToken) {
+        // There was an error with the access token. Fetch a new one.
+        return this.refreshToken()
+      }
+      // There was an error with the access token. Return error
+      throw e
     }
 
     // Done
