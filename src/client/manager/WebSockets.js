@@ -10,6 +10,7 @@
 //
 
 import EventEmitter from '../../internal/EventEmitter'
+import io from "socket.io-client";
 
 export default class WebSockets extends EventEmitter {
   constructor (store, client, address) {
@@ -62,10 +63,17 @@ export default class WebSockets extends EventEmitter {
     }
 
     // Create the websocket
-    const url = `${this.address}/ws?app_id=${encodeURIComponent(this.store.appID)}&token=${encodeURIComponent(this.store.token)}`
-    this.socket = new WebSocket(url)
-    this.socket.addEventListener('open', this.handleConnected.bind(this))
-    this.socket.addEventListener('message', this.handleMessage.bind(this))
+    // const url = `${this.address}/ws?app_id=${encodeURIComponent(this.store.appID)}&token=${encodeURIComponent(this.store.token)}`
+    // this.socket = new WebSocket(url)
+    this.socket = io(this.address, {
+			query: {
+        eventUri: `/u/${this.store.userID}`,
+        app_id: this.store.appID,
+        token: this.store.token
+			},
+		})
+    this.socket.addEventListener('connect', this.handleConnected.bind(this))
+    this.socket.addEventListener('event', this.handleMessage.bind(this))
     this.socket.addEventListener('error', this.handleError.bind(this))
     this.socket.addEventListener('close', this.handleClose.bind(this))
 
