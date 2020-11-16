@@ -260,7 +260,7 @@ export default class Client extends EventEmitter {
       if ((nowDate + 5000) > expirationTime) throw new Error('Token expired.')
     } catch (e) {
 
-      if (!this.Blockv.useExternalToken) {
+      if (!this.Blockv.customToken) {
         // There was an error with the access token. Fetch a new one.
         return this.refreshToken()
       }

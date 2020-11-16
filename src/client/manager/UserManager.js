@@ -13,11 +13,11 @@ import jwtDecode from 'jwt-decode'
 /* global window */
 
 export default class UserManager {
-  constructor (UserApi, store, disableAuth, useExternalToken) {
+  constructor (UserApi, store, disableAuth, customToken) {
     this.UserApi = UserApi
     this.store = store
     this.disableAuth = disableAuth
-    this.useExternalToken = useExternalToken
+    this.customToken = customToken
   }
 
   /**
@@ -222,8 +222,8 @@ export default class UserManager {
     let tokenToCheck = refreshToken;
 
     // If the token is supplied externally, simply check it
-    if (this.useExternalToken)
-      tokenToCheck = token
+    if (this.customToken)
+      tokenToCheck = this.customToken
     
     // if no token
     if (!tokenToCheck) {

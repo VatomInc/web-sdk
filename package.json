@@ -1,6 +1,6 @@
 {
   "name": "@vatom/web-sdk",
-  "version": "3.3.38",
+  "version": "3.3.39",
   "description": "Allows web apps to display and interact with vatoms.",
   "main": "lib/index-node.js",
   "browser": "src/index.js",

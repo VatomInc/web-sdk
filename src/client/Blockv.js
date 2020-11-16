@@ -24,6 +24,8 @@ export default class Blockv extends EventEmitter {
     super()
     const prefix = payload.prefix || payload.appID
 
+    console.log('hi', payload)
+
     this.store = new Store(prefix)
     this.store.appID = payload.appID
     this.store.server = payload.server || 'https://api.blockv.io'
@@ -33,7 +35,7 @@ export default class Blockv extends EventEmitter {
     this.dataPool.Blockv = this
     this.dataPool.disableSyncV2 = payload.disableSyncV2
     this.disableAuth = payload.disableAuth
-    this.useExternalToken = payload.useExternalToken
+    this.customToken = payload.customToken()
     this.client = new Client(this)
 
     const userApi = new UserApi(this)
@@ -41,7 +43,7 @@ export default class Blockv extends EventEmitter {
 
     this.Activity = new Activity(activityApi)
     this.WebSockets = new MultiWebSockets(this.store, this.client)
-    this.UserManager = new UserManager(userApi, this.store, payload.disableAuth, payload.useExternalToken)
+    this.UserManager = new UserManager(userApi, this.store, payload.disableAuth, this.customToken)
     this.Vatoms = new Vatoms(this)
 
     if (this.UserManager.isLoggedIn) {
