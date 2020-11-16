@@ -216,19 +216,28 @@ export default class UserManager {
     let decodedToken
     let nowDate
     let expirationTime
-    const { refreshToken } = this.store
-    // if no refreshToken
-    if (!refreshToken) {
+    const { token, refreshToken } = this.store
+
+    // For blockV we can check the refresh token to see when it expires
+    let tokenToCheck = refreshToken;
+
+    // If the token is supplied externally, simply check it
+    if (this.useExternalToken)
+      tokenToCheck = token
+    
+    // if no token
+    if (!tokenToCheck) {
       return false
     }
     try {
       // decode token
-      decodedToken = jwtDecode(refreshToken)
+      decodedToken = jwtDecode(tokenToCheck)
       expirationTime = (decodedToken.exp * 1000)
       nowDate = Date.now()
       // quick calc to determine if the token has expired
       return nowDate < (expirationTime - 30000)
     } catch (e) {
+      console.log("error", e)
       // decoding fails
       return false
     }
