@@ -208,7 +208,7 @@ export default class UserManager {
      * @return {Boolean} returns True / False if the refresh token is valid
      */
   get isLoggedIn () {
-    if (this.useExternalToken) return true;
+
     // stop if no access provider credentials exist
     if (!this.store.assetProvider)
       return false
