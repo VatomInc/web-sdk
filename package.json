@@ -80,7 +80,7 @@
     "lz-string": "^1.4.4",
     "lzutf8": "^0.5.5",
     "pouchdb": "^7.1.1",
-    "socket.io-client": "^2.2.0",
+    "socket.io-client": "^2.3.0",
     "url-parse": "^1.4.7"
   },
   "repository": "github:BLOCKvIO/web-sdk",
