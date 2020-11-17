@@ -11,7 +11,6 @@
 
 import EventEmitter from '../../internal/EventEmitter'
 import io from "socket.io-client";
-import jwtDecode from 'jwt-decode'
 
 export default class WebSockets extends EventEmitter {
   constructor (store, client, address) {
@@ -66,10 +65,10 @@ export default class WebSockets extends EventEmitter {
     // Create the websocket
     // const url = `${this.address}/ws?app_id=${encodeURIComponent(this.store.appID)}&token=${encodeURIComponent(this.store.token)}`
     // this.socket = new WebSocket(url)
-    const decoded = jwtDecode(this.store.token);
+    
     this.socket = io(this.address, {
 			query: {
-        eventUri: `/u/${decoded.sub}`,
+        eventUri: `/u/${this.store.userID}`,
         app_id: this.store.appID,
         token: this.store.token
 			},

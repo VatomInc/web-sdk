@@ -223,7 +223,7 @@ export default class UserManager {
 
     // If the token is supplied externally, simply check it
     if (this.customToken)
-      tokenToCheck = this.customToken
+      tokenToCheck = this.customToken()
     
     // if no token
     if (!tokenToCheck) {

@@ -12,8 +12,9 @@
 import jwtDecode from 'jwt-decode'
 
 export default class Store {
-  constructor (prefix) {
+  constructor (prefix, customToken) {
     this.prefix = prefix
+    this.customToken = customToken
   }
 
   get server () {
@@ -30,8 +31,8 @@ export default class Store {
 
   get userID () {
     try {
-      let dCode = jwtDecode(this.refreshToken)
-      return dCode.user_id
+      let dCode = jwtDecode(this.customToken ? this.token : this.refreshToken)
+      return dCode.user_id || dCode.sub
     } catch (err) {
       console.warn("Decoding failed!")
     }
@@ -59,6 +60,9 @@ export default class Store {
   }
 
   get token () {
+    if (this.customToken) {
+      return this.customToken()
+    }
     return this.accessToken
   }
 

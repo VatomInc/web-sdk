@@ -26,7 +26,7 @@ export default class Blockv extends EventEmitter {
 
     console.log('hi', payload)
 
-    this.store = new Store(prefix)
+    this.store = new Store(prefix, payload.customToken)
     this.store.appID = payload.appID
     this.store.server = payload.server || 'https://api.blockv.io'
     this.store.websocketAddress = payload.websocketAddress || 'wss://newws.blockv.io'
@@ -35,7 +35,7 @@ export default class Blockv extends EventEmitter {
     this.dataPool.Blockv = this
     this.dataPool.disableSyncV2 = payload.disableSyncV2
     this.disableAuth = payload.disableAuth
-    this.customToken = payload.customToken()
+    this.customToken = payload.customToken
     this.client = new Client(this)
 
     const userApi = new UserApi(this)
@@ -47,6 +47,7 @@ export default class Blockv extends EventEmitter {
     this.Vatoms = new Vatoms(this)
 
     if (this.UserManager.isLoggedIn) {
+      console.log("Setting Session INfo", this.store.userID, this.client)
       this.dataPool.setSessionInfo({ userID: this.store.userID, client: this.client })
     }
   }
