@@ -130,7 +130,7 @@ export default class BLOCKvRegion extends Region {
   async processMessage (msg) {
 
     // We only handle state_update messages here
-    if (msg.msg_type != 'state_update')
+    if (msg.msg_type !== 'state_update')
       return
 
     // Get vatom ID

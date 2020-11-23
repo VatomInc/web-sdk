@@ -63,16 +63,20 @@ export default class WebSockets extends EventEmitter {
     }
 
     // Create the websocket
-    // const url = `${this.address}/ws?app_id=${encodeURIComponent(this.store.appID)}&token=${encodeURIComponent(this.store.token)}`
-    // this.socket = new WebSocket(url)
+
+    if (this.address.includes("ws.vatominc.com")) {
+      this.socket = io(this.address, {
+        query: {
+          eventUri: `/u/${this.store.userID}`,
+          app_id: this.store.appID,
+          token: this.store.token
+        },
+      })
+    } else {
+      const url = `${this.address}/ws?app_id=${encodeURIComponent(this.store.appID)}&token=${encodeURIComponent(this.store.token)}`
+      this.socket = new WebSocket(url)
+    }
     
-    this.socket = io(this.address, {
-			query: {
-        eventUri: `/u/${this.store.userID}`,
-        app_id: this.store.appID,
-        token: this.store.token
-			},
-		})
     this.socket.addEventListener('connect', this.handleConnected.bind(this))
     this.socket.addEventListener('event', this.handleMessage.bind(this))
     this.socket.addEventListener('error', this.handleError.bind(this))
@@ -102,7 +106,8 @@ export default class WebSockets extends EventEmitter {
    * @return {JSON<Object>}  A JSON Object is returned containing the list of chosen message types
    */
   handleMessage (e) {
-    const ed = JSON.parse(e.data)
+    // Handle both blockv and vatominc web sockets
+    const ed = !!e.data ? JSON.parse(e.data) : e
     this.trigger('websocket.raw', ed)
 
     // if the message is a RPC message
