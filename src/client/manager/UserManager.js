@@ -209,9 +209,6 @@ export default class UserManager {
      */
   get isLoggedIn () {
 
-    // stop if no access provider credentials exist
-    if (!this.store.assetProvider)
-      return false
     // define our vars
     let decodedToken
     let nowDate
@@ -223,8 +220,12 @@ export default class UserManager {
 
     // If the token is supplied externally, simply check it
     if (this.customToken)
-      tokenToCheck = this.customToken()
+      tokenToCheck = await this.customToken()
     
+    // stop if no access provider credentials exist
+    if (!this.store.assetProvider)
+      return false
+
     // if no token
     if (!tokenToCheck) {
       return false
