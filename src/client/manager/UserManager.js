@@ -220,7 +220,7 @@ export default class UserManager {
 
     // If the token is supplied externally, simply check it
     if (this.customToken)
-      tokenToCheck = await this.customToken()
+      tokenToCheck = this.customToken()
     
     // stop if no access provider credentials exist
     if (!this.store.assetProvider)

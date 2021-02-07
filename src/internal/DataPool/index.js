@@ -61,6 +61,7 @@ export default class DataPool {
    * Update session-specific information used by plugins.
    */
   setSessionInfo (info) {
+    console.info("setSessionInfo")
     // Store it
     this.sessionInfo = info
 

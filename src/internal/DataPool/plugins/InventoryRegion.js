@@ -33,7 +33,7 @@ export default class InventoryRegion extends BLOCKvRegion {
 
   /** Shut down this region if the current user changes */
   onSessionInfoChanged () {
-    this.close()
+    // this.close()
   }
 
   /** 
