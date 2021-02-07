@@ -72,13 +72,20 @@ export default class WebSockets extends EventEmitter {
           token: this.store.token
         },
       })
+
+      this.socket.addEventListener('connect', this.handleConnected.bind(this))
+      this.socket.addEventListener('event', this.handleMessage.bind(this))
+
     } else {
       const url = `${this.address}/ws?app_id=${encodeURIComponent(this.store.appID)}&token=${encodeURIComponent(this.store.token)}`
       this.socket = new WebSocket(url)
+
+      this.socket.addEventListener('open', this.handleConnected.bind(this))
+      this.socket.addEventListener('message', this.handleMessage.bind(this))
+    
     }
     
-    this.socket.addEventListener('connect', this.handleConnected.bind(this))
-    this.socket.addEventListener('event', this.handleMessage.bind(this))
+    
     this.socket.addEventListener('error', this.handleError.bind(this))
     this.socket.addEventListener('close', this.handleClose.bind(this))
 
@@ -173,8 +180,8 @@ export default class WebSockets extends EventEmitter {
       }
 
       // Increase retry delay for next time
-      if (this.delayTime < 8000) {
-        this.delayTime *= 2
+      if (this.delayTime < 4000) {
+        this.delayTime += 1000
       }
 
       // connect again
